@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 import HabitsList from './components/HabitsList';
 import ProfileSettings from './components/ProfileSettings';
 import TabBar from './components/TabBar';
-import { Screen } from './types';
+import type { Screen } from './types';
 
 function App() {
   const {
@@ -27,7 +27,6 @@ function App() {
     setWeather,
     setWatchData,
     setAvailableDevices,
-    setCurrentScreen,
   } = useAppStore();
 
   const [isLoading, setIsLoading] = useState(true);

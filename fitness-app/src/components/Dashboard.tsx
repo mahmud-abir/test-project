@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
 import { 
-  Sun, Cloud, CloudRain, CloudSun, Droplets, Thermometer, Wind, 
+  Sun, Cloud, CloudRain, CloudSun, Droplets, Wind, 
   Watch, Bluetooth, CheckCircle, AlertCircle, Footprints, Heart, 
-  Flame, Bell, ChevronRight, Scan, X
+  Flame, Bell, Scan, X
 } from 'lucide-react';
 
 export default function Dashboard() {
-  const { userProfile, weather, watchData, aiTips, habits, reminders, setWatchData, disconnectWatch, connectWatch, availableDevices } = useAppStore();
+  const { userProfile, weather, watchData, aiTips, habits, reminders, disconnectWatch, connectWatch, availableDevices } = useAppStore();
   const [showDeviceModal, setShowDeviceModal] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
 

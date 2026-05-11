@@ -1,4 +1,4 @@
-import { AITip, WeatherData, WatchData } from '../types';
+import type { AITip, WeatherData, WatchData } from '../types';
 
 const WEATHER_TIPS = [
   "It's a beautiful day! Perfect for an outdoor walk.",

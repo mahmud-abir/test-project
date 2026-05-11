@@ -1,4 +1,4 @@
-import { UserProfile, HealthCondition, Habit } from '../types';
+import type { UserProfile, HealthCondition, Habit } from '../types';
 
 const PREDEFINED_CONDITIONS = [
   { id: 'diabetes', name: 'Diabetes' },

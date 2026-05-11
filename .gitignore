@@ -5,12 +5,21 @@ node_modules/
 # Build outputs
 dist/
 build/
-target/
+.next/
+.nuxt/
+public/build/
+
+# TypeScript/JavaScript
+*.tsbuildinfo
+*.js.map
+*.jsx.map
+*.ts.map
 
 # Environment variables
 .env
 .env.local
 .env.*
+!.env.example
 
 # IDE files
 .vscode/
@@ -18,52 +27,14 @@ target/
 *.swp
 *.swo
 
-# Logs
-*.log
-
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Temporary files
-*.tmp
-*.temp
-
-# OS generated files
+# OS files
 .DS_Store
 Thumbs.db
 
-# Coverage reports
+# Logs
+*.log
+
+# Coverage
 coverage/
-htmlcov/
-.coverage
-
-# TypeScript/JavaScript build artifacts
-*.js.map
-*.tsbuildinfo
-
-# Package manager
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Vite specific
-!.vite/
-vite.config.ts
-
-# ESLint
-eslint.config.js
-
-# PostCSS
-postcss.config.js
-
-# Tailwind
-tailwind.config.js
-
-# TypeScript configs
-tsconfig.app.json
-tsconfig.node.json
-tsconfig.json
+.nyc_output/
 ```
