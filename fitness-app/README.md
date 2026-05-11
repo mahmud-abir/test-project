@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# AI-Powered Fitness & Health App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, mobile-first fitness and health application built with React 18, TypeScript, Vite, and TailwindCSS v4.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Smart Onboarding**: 4-step profile setup with health conditions tracking
+- **AI-Powered Habits**: Personalized habit generation based on your profile and health conditions
+- **Real-Time Dashboard**: Weather widget, AI tips, quick stats, and watch connection status
+- **Habit Tracking**: Recurring reminders and daily routines with streak tracking
+- **Bluetooth Integration**: Real Web Bluetooth API support with simulation fallback
+- **Dark Theme**: Modern dark UI with smooth animations using Framer Motion
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 18 + TypeScript
+- Vite (Build Tool)
+- TailwindCSS v4 (Styling)
+- Zustand (State Management)
+- Framer Motion (Animations)
+- Lucide React (Icons)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+ 
+- npm or yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Deploy to Vercel
+
+This project is configured for easy deployment to Vercel:
+
+1. Install Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Deploy:
+   ```bash
+   vercel
+   ```
+
+Or connect your GitHub repository to Vercel for automatic deployments.
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── Dashboard.tsx       # Main dashboard screen
+│   ├── HabitsList.tsx      # Habits tracking screen
+│   ├── OnboardingForm.tsx  # 4-step onboarding flow
+│   ├── ProfileSettings.tsx # User profile screen
+│   └── TabBar.tsx          # Navigation tab bar
+├── store/
+│   └── useAppStore.ts      # Zustand state management
+├── utils/
+│   ├── bluetoothService.ts # Bluetooth device integration
+│   ├── habitGenerator.ts   # AI habit generation logic
+│   └── tipGenerator.ts     # AI tip generation system
+├── types/
+│   └── index.ts            # TypeScript type definitions
+├── App.tsx                 # Main app component
+└── main.tsx                # Entry point
+```
+
+## License
+
+MIT

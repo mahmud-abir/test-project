@@ -9,7 +9,6 @@ import Dashboard from './components/Dashboard';
 import HabitsList from './components/HabitsList';
 import ProfileSettings from './components/ProfileSettings';
 import TabBar from './components/TabBar';
-import type { Screen } from './types';
 
 function App() {
   const {
@@ -18,7 +17,6 @@ function App() {
     healthConditions,
     customConditions,
     habits,
-    weather,
     watchData,
     currentScreen,
     setOnboarded,
@@ -115,27 +113,6 @@ function App() {
     return () => clearInterval(interval);
   }, [isOnboarded]);
 
-  // Handle onboarding completion
-  const handleOnboardingComplete = () => {
-    const profile = useAppStore.getState().userProfile;
-    const conditions = useAppStore.getState().healthConditions;
-    const customs = useAppStore.getState().customConditions;
-
-    if (profile) {
-      const generatedHabits = generateHabits(profile, conditions, customs);
-      setHabits(generatedHabits);
-    }
-
-    setOnboarded(true);
-
-    // Add welcome tip
-    addAITip({
-      content: "Welcome to your fitness journey! Let's build healthy habits together.",
-      category: 'motivation',
-      priority: 'high',
-    });
-  };
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-bg-primary flex items-center justify-center">
@@ -149,7 +126,29 @@ function App() {
   }
 
   if (!isOnboarded) {
-    return <OnboardingForm onComplete={handleOnboardingComplete} />;
+    return (
+      <OnboardingForm 
+        onComplete={() => {
+          const profile = useAppStore.getState().userProfile;
+          const conditions = useAppStore.getState().healthConditions;
+          const customs = useAppStore.getState().customConditions;
+
+          if (profile) {
+            const generatedHabits = generateHabits(profile, conditions, customs);
+            setHabits(generatedHabits);
+          }
+
+          setOnboarded(true);
+
+          // Add welcome tip
+          addAITip({
+            content: "Welcome to your fitness journey! Let's build healthy habits together.",
+            category: 'motivation',
+            priority: 'high',
+          });
+        }} 
+      />
+    );
   }
 
   return (
