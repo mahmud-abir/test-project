@@ -1,4 +1,12 @@
-import { WatchData } from '../types';
+import type { WatchData } from '../types';
+
+declare global {
+  interface Navigator {
+    bluetooth?: {
+      requestDevice: (options: { acceptAllDevices?: boolean; optionalServices?: string[] }) => Promise<{ name?: string }>;
+    };
+  }
+}
 
 const SIMULATION_DEVICES = [
   { name: 'FitWatch Pro', type: 'smartwatch' },

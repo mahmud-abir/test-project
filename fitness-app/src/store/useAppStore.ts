@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserProfile, HealthCondition, Habit, AITip, WeatherData, WatchData, Reminder, OnboardingStep, Screen } from '../types';
+import type { UserProfile, HealthCondition, Habit, AITip, WeatherData, WatchData, Reminder, OnboardingStep, Screen } from '../types';
 
 interface AppState {
   // Onboarding
