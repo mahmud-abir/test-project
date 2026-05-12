@@ -65,32 +65,32 @@ export default function HabitsList() {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-base mb-1 break-words">{habit.name}</h3>
+            <h3 className="font-semibold text-base mb-1 break-words line-clamp-2">{habit.name}</h3>
             
             <div className="flex flex-wrap items-center gap-2 text-sm text-text-secondary">
               {habit.intervalMinutes && (
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  Every {habit.intervalMinutes}min
+                <span className="flex items-center gap-1 min-w-0">
+                  <Clock className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">Every {habit.intervalMinutes}min</span>
                 </span>
               )}
               
               {habit.scheduledTime && (
-                <span className="flex items-center gap-1">
-                  <Bell className="w-4 h-4" />
-                  {habit.scheduledTime}
+                <span className="flex items-center gap-1 min-w-0">
+                  <Bell className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{habit.scheduledTime}</span>
                 </span>
               )}
 
               {habit.isActive && (
-                <span className="badge badge-primary text-xs">
+                <span className="badge badge-primary text-xs whitespace-nowrap">
                   Reminder Active
                 </span>
               )}
             </div>
 
             {countdowns[habit.id] && (
-              <p className="text-xs text-text-muted mt-2">
+              <p className="text-xs text-text-muted mt-2 truncate">
                 Next: {countdowns[habit.id]}
               </p>
             )}

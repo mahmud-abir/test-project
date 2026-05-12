@@ -337,22 +337,22 @@ export default function Dashboard() {
                       : 'bg-bg-surface border-bg-card hover:border-primary/50'
                   } border`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-between min-w-0">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
                       {device.device ? (
-                        <Smartphone className="w-5 h-5 text-primary" />
+                        <Smartphone className="w-5 h-5 text-primary flex-shrink-0" />
                       ) : (
-                        <Watch className="w-5 h-5 text-text-secondary" />
+                        <Watch className="w-5 h-5 text-text-secondary flex-shrink-0" />
                       )}
-                      <div>
-                        <p className="font-medium">{device.name}</p>
-                        <p className="text-sm text-text-muted capitalize">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium truncate">{device.name}</p>
+                        <p className="text-sm text-text-muted capitalize truncate">
                           {device.device ? 'Real Device' : device.type}
                         </p>
                       </div>
                     </div>
                     {selectedDevice === device.name && (
-                      <CheckCircle className="w-5 h-5 text-primary" />
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 ml-2" />
                     )}
                   </div>
                 </button>

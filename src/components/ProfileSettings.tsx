@@ -185,7 +185,7 @@ export default function ProfileSettings() {
         {healthConditions.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {healthConditions.map((condition) => (
-              <span key={condition.id} className="badge badge-primary">
+              <span key={condition.id} className="badge badge-primary max-w-full truncate">
                 {condition.name}
               </span>
             ))}
@@ -199,7 +199,7 @@ export default function ProfileSettings() {
             <h4 className="font-medium mt-4 mb-2 text-sm text-text-secondary">Custom Conditions</h4>
             <div className="flex flex-wrap gap-2">
               {customConditions.map((name) => (
-                <span key={name} className="badge badge-warning">
+                <span key={name} className="badge badge-warning max-w-full truncate">
                   {name}
                 </span>
               ))}
