@@ -24,7 +24,7 @@ interface AppState {
   
   // Watch
   watchData: WatchData;
-  availableDevices: { name: string; type: string }[];
+  availableDevices: { name: string; type: string; device?: any }[];
   
   // Reminders
   reminders: Reminder[];
@@ -47,13 +47,14 @@ interface AppState {
   addAITip: (tip: Omit<AITip, 'id' | 'timestamp'>) => void;
   setWeather: (weather: WeatherData) => void;
   setWatchData: (data: Partial<WatchData>) => void;
-  setAvailableDevices: (devices: { name: string; type: string }[]) => void;
-  connectWatch: (deviceName: string, isReal: boolean) => void;
+  setAvailableDevices: (devices: { name: string; type: string; device?: any }[]) => void;
+  connectWatch: (deviceName: string, isReal: boolean, device?: any) => void;
   disconnectWatch: () => void;
   addReminder: (reminder: Reminder) => void;
   removeReminder: (id: string) => void;
   setCurrentScreen: (screen: Screen) => void;
   resetApp: () => void;
+  setConnectedBluetoothDevice: (device: any | null) => void;
 }
 
 const initialWatchData: WatchData = {
@@ -92,6 +93,7 @@ export const useAppStore = create<AppState>()(
       availableDevices: [],
       reminders: [],
       currentScreen: 'dashboard',
+      connectedBluetoothDevice: null,
 
       // Actions
       setOnboarded: (value) => set({ isOnboarded: value }),
@@ -177,7 +179,7 @@ export const useAppStore = create<AppState>()(
       
       setAvailableDevices: (devices) => set({ availableDevices: devices }),
       
-      connectWatch: (deviceName, isReal) => 
+      connectWatch: (deviceName, isReal, device) => 
         set(() => ({
           watchData: {
             isConnected: true,
@@ -189,6 +191,7 @@ export const useAppStore = create<AppState>()(
             lastSynced: new Date(),
             connectionQuality: 'excellent' as const,
           },
+          connectedBluetoothDevice: device || null,
         })),
       
       disconnectWatch: () => 
@@ -209,6 +212,8 @@ export const useAppStore = create<AppState>()(
       
       setCurrentScreen: (screen) => set({ currentScreen: screen }),
       
+      setConnectedBluetoothDevice: (device) => set({ connectedBluetoothDevice: device }),
+      
       resetApp: () => 
         set({
           isOnboarded: false,
@@ -224,6 +229,7 @@ export const useAppStore = create<AppState>()(
           availableDevices: [],
           reminders: [],
           currentScreen: 'dashboard',
+          connectedBluetoothDevice: null,
         }),
     }),
     {
