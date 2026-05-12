@@ -22,8 +22,8 @@ export interface Habit {
   isActive: boolean;
   streak: number;
   lastCompleted?: string;
-  nextReminder?: Date;
-  snoozeUntil?: Date;
+  nextReminder?: Date | string;
+  snoozeUntil?: Date | string;
   conditionId?: string;
 }
 
@@ -51,7 +51,7 @@ export interface WatchData {
   steps: number;
   heartRate: number;
   calories: number;
-  lastSynced: Date;
+  lastSynced: Date | string;
   connectionQuality: 'excellent' | 'good' | 'poor' | 'disconnected';
 }
 

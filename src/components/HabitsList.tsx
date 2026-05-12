@@ -130,7 +130,7 @@ export default function HabitsList() {
           <div className="mt-4 pt-4 border-t border-bg-card">
             <p className="text-sm text-warning flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              Snoozed until {new Date(habit.snoozeUntil!).toLocaleTimeString()}
+              Snoozed until {habit.snoozeUntil ? new Date(habit.snoozeUntil).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
             </p>
           </div>
         )}

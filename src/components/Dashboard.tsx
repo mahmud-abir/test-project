@@ -273,7 +273,7 @@ export default function Dashboard() {
           </button>
         ) : (
           <div className="text-xs text-text-secondary">
-            Last synced: {watchData.lastSynced.toLocaleTimeString()}
+            Last synced: {watchData.lastSynced ? new Date(watchData.lastSynced).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not synced yet'}
           </div>
         )}
       </motion.div>
