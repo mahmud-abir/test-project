@@ -151,9 +151,9 @@ export default function HabitsList() {
       {/* Recurring Reminders */}
       {recurringHabits.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-primary" />
-            Recurring Reminders
+          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2 overflow-hidden">
+            <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+            <span className="truncate">Recurring Reminders</span>
           </h2>
           <div className="space-y-3">
             {recurringHabits.map((habit, i) => renderHabitCard(habit, i))}
@@ -164,9 +164,9 @@ export default function HabitsList() {
       {/* Daily Routines */}
       {dailyHabits.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <Sun className="w-5 h-5 text-warning" />
-            Daily Routines
+          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2 overflow-hidden">
+            <Sun className="w-5 h-5 text-warning flex-shrink-0" />
+            <span className="truncate">Daily Routines</span>
           </h2>
           <div className="space-y-3">
             {dailyHabits.map((habit, i) => renderHabitCard(habit, i + recurringHabits.length))}

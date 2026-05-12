@@ -10,7 +10,7 @@ import { getWeatherData, WeatherData } from '../utils/weatherService';
 
 const Dashboard = () => {
   const { 
-    user, 
+    userProfile, 
     watchData, 
     connectWatch, 
     disconnectWatch, 
@@ -140,7 +140,7 @@ const Dashboard = () => {
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-2xl font-bold text-white">
-            Hello, {user?.username || 'User'}
+            Hello, {userProfile?.username || 'User'}
           </h1>
           <div className="flex items-center gap-2 text-cyan-400 mt-1">
             <Clock className="w-4 h-4" />
@@ -153,7 +153,7 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold">
-          {user?.username?.[0]?.toUpperCase() || 'U'}
+          {userProfile?.username?.[0]?.toUpperCase() || 'U'}
         </div>
       </div>
 
