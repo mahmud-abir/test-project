@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from './store/useAppStore';
 import { generateHabits } from './utils/habitGenerator';
-import { getSimulationDevices, simulateWatchData, getConnectionQuality } from './utils/bluetoothService';
+import { getSimulationDevices, simulateWatchData, getConnectionQuality, isRealDeviceConnected, getRealHeartRate } from './utils/bluetoothService';
 import { getTimeBasedTip, getWeatherTip, getActivityTip, getHealthTip } from './utils/tipGenerator';
 import OnboardingForm from './components/OnboardingForm';
 import Dashboard from './components/Dashboard';
@@ -78,6 +78,15 @@ function App() {
     if (!isOnboarded || !watchData.isConnected) return;
 
     const updateWatchData = () => {
+      // For real devices, try to get real heart rate first
+      if (watchData.connectionType === 'real' && isRealDeviceConnected()) {
+        getRealHeartRate().then(realHeartRate => {
+          if (realHeartRate !== null && realHeartRate > 0) {
+            setWatchData({ heartRate: realHeartRate });
+          }
+        });
+      }
+      
       const newData = simulateWatchData(watchData);
       newData.connectionQuality = getConnectionQuality(true);
       setWatchData(newData);
@@ -94,7 +103,7 @@ function App() {
 
     const interval = setInterval(updateWatchData, 3000);
     return () => clearInterval(interval);
-  }, [isOnboarded, watchData.isConnected, watchData.heartRate, watchData.steps]);
+  }, [isOnboarded, watchData.isConnected, watchData.connectionType, watchData.heartRate, watchData.steps]);
 
   // Time-based tips
   useEffect(() => {

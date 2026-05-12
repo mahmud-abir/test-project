@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
+import { scanBluetoothDevices, connectToDevice, disconnectFromDevice, setupHeartRateListener, isRealDeviceConnected } from '../utils/bluetoothService';
 import { 
   Sun, Cloud, CloudRain, CloudSun, Droplets, Wind, 
   Watch, Bluetooth, CheckCircle, AlertCircle, Footprints, Heart, 
@@ -8,7 +9,7 @@ import {
 } from 'lucide-react';
 
 export default function Dashboard() {
-  const { userProfile, weather, watchData, aiTips, habits, reminders, disconnectWatch, connectWatch, availableDevices } = useAppStore();
+  const { userProfile, weather, watchData, aiTips, habits, reminders, disconnectWatch, connectWatch, availableDevices, setWatchData, setConnectedBluetoothDevice } = useAppStore();
   const [showDeviceModal, setShowDeviceModal] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
 
@@ -36,9 +37,28 @@ export default function Dashboard() {
   const pendingReminders = reminders.filter(r => r.isPending).length;
   const activeHabits = habits.filter(h => h.isActive).length;
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     if (selectedDevice) {
-      connectWatch(selectedDevice, false);
+      const device = availableDevices.find(d => d.name === selectedDevice)?.device;
+      
+      // Try to connect to real device first
+      if (device) {
+        const connected = await connectToDevice(device);
+        if (connected) {
+          connectWatch(selectedDevice, true, device);
+          // Setup heart rate listener for real-time updates
+          setupHeartRateListener((heartRate) => {
+            setWatchData({ heartRate });
+          });
+        } else {
+          // Fallback to simulation
+          connectWatch(selectedDevice, false);
+        }
+      } else {
+        // Simulation mode
+        connectWatch(selectedDevice, false);
+      }
+      
       setShowDeviceModal(false);
     }
   };
@@ -212,7 +232,14 @@ export default function Dashboard() {
           </div>
           
           {watchData.isConnected && (
-            <button onClick={disconnectWatch} className="text-text-muted hover:text-red-400">
+            <button 
+              onClick={() => {
+                disconnectFromDevice();
+                disconnectWatch();
+                setConnectedBluetoothDevice(null);
+              }} 
+              className="text-text-muted hover:text-red-400"
+            >
               <X className="w-5 h-5" />
             </button>
           )}
