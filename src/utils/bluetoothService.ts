@@ -58,7 +58,8 @@ export const scanBluetoothDevices = async (): Promise<{ name: string; type: stri
   }
 
   try {
-    // Request Bluetooth devices with specific services for fitness trackers
+    // Request ANY Bluetooth device - this opens the native picker showing ALL nearby BLE devices
+    // including smartwatches, phones (in pairing mode), headphones, fitness trackers, etc.
     const device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: [
@@ -67,19 +68,21 @@ export const scanBluetoothDevices = async (): Promise<{ name: string; type: stri
         'heart_rate',
         'blood_pressure',
         'weight_scale',
+        'fitness_machine',
       ],
     });
 
     // Store the real device for later connection
     realDevice = device;
 
-    // If a device is found, return it along with simulated ones
+    // Return the scanned real device along with simulated ones as fallback
     return [
       { name: device.name || 'Unknown Device', type: 'bluetooth', device },
       ...SIMULATION_DEVICES,
     ];
   } catch (error) {
     console.log('Bluetooth scan failed or cancelled:', error);
+    // Return simulation devices if scan was cancelled or failed
     return SIMULATION_DEVICES;
   }
 };

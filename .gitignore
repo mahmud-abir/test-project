@@ -1,8 +1,7 @@
-```
 # Dependencies
 node_modules/
 
-# Build artifacts
+# Build outputs
 dist/
 build/
 target/
@@ -12,21 +11,17 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.so
-*.egg-info/
-.eggs/
-
-# Virtual environments
+.Python
+env/
 venv/
 .venv/
-env/
-ENV/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+.ENV
+.ENV.*
+.python-version
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
 
 # Logs
 *.log
@@ -34,21 +29,19 @@ ENV/
 # Environment variables
 .env
 .env.local
-*.env.*
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# Temporary files
-*.tmp
-*.temp
-*.bak
 
 # Compressed files
 *.zip
@@ -73,31 +66,3 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-
-# Gradle
-.gradle/
-
-# MyPy
-.mypy_cache/
-
-# PyTest
-.pytest_cache/
-
-# Thumbnails
-*.thumb
-
-# SQLite
-*.db
-*.db-journal
-
-# Backup files
-*~
-*.backup
-*.bak
-
-# System
-.DS_Store
-ehthumbs.db
-Icon?
-Thumbs.db
-```
