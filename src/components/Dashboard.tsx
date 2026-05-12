@@ -5,13 +5,15 @@ import { scanBluetoothDevices, connectToDevice, disconnectFromDevice, setupHeart
 import { 
   Sun, Cloud, CloudRain, CloudSun, Droplets, Wind, 
   Watch, Bluetooth, CheckCircle, AlertCircle, Footprints, Heart, 
-  Flame, Bell, Scan, X
+  Flame, Bell, Scan, X, Smartphone
 } from 'lucide-react';
 
 export default function Dashboard() {
   const { userProfile, weather, watchData, aiTips, habits, reminders, disconnectWatch, connectWatch, availableDevices, setWatchData, setConnectedBluetoothDevice } = useAppStore();
   const [showDeviceModal, setShowDeviceModal] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState<string | null>(null);
 
   const getWeatherIcon = (condition: string) => {
     switch (condition) {
@@ -36,6 +38,22 @@ export default function Dashboard() {
 
   const pendingReminders = reminders.filter(r => r.isPending).length;
   const activeHabits = habits.filter(h => h.isActive).length;
+
+  // Handle scanning for real Bluetooth devices
+  const handleScanDevices = async () => {
+    setIsScanning(true);
+    setScanError(null);
+    
+    try {
+      const devices = await scanBluetoothDevices();
+      // Update the store with scanned devices
+      setAvailableDevices(devices);
+    } catch (error) {
+      setScanError(error instanceof Error ? error.message : 'Failed to scan devices');
+    } finally {
+      setIsScanning(false);
+    }
+  };
 
   const handleConnect = async () => {
     if (selectedDevice) {
@@ -281,6 +299,33 @@ export default function Dashboard() {
               </button>
             </div>
 
+            {/* Scan Button - Opens native Bluetooth picker */}
+            <div className="mb-4">
+              <button
+                onClick={handleScanDevices}
+                disabled={isScanning}
+                className="btn-primary w-full flex items-center justify-center gap-2"
+              >
+                {isScanning ? (
+                  <>
+                    <Scan className="w-5 h-5 animate-spin" />
+                    Scanning...
+                  </>
+                ) : (
+                  <>
+                    <Bluetooth className="w-5 h-5" />
+                    Scan for Real Devices
+                  </>
+                )}
+              </button>
+              {scanError && (
+                <p className="text-red-400 text-sm mt-2 text-center">{scanError}</p>
+              )}
+              <p className="text-text-muted text-xs mt-2 text-center">
+                Opens native Bluetooth picker to see all nearby devices (watches, phones, headphones)
+              </p>
+            </div>
+
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {availableDevices.map((device) => (
                 <button
@@ -293,9 +338,18 @@ export default function Dashboard() {
                   } border`}
                 >
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium">{device.name}</p>
-                      <p className="text-sm text-text-muted capitalize">{device.type}</p>
+                    <div className="flex items-center gap-3">
+                      {device.device ? (
+                        <Smartphone className="w-5 h-5 text-primary" />
+                      ) : (
+                        <Watch className="w-5 h-5 text-text-secondary" />
+                      )}
+                      <div>
+                        <p className="font-medium">{device.name}</p>
+                        <p className="text-sm text-text-muted capitalize">
+                          {device.device ? 'Real Device' : device.type}
+                        </p>
+                      </div>
                     </div>
                     {selectedDevice === device.name && (
                       <CheckCircle className="w-5 h-5 text-primary" />
