@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
-import { generateHabits } from '../utils/habitGenerator';
-import { getAllConditions, getConditionById } from '../utils/habitGenerator';
+import { generateHabits, getAllConditions } from '../utils/habitGenerator';
 import { Watch, Check, Plus, X, Search } from 'lucide-react';
+
+interface OnboardingFormProps {
+  onComplete: () => void;
+}
 
 type OnboardingStep = 'profile' | 'conditions' | 'watch' | 'completion';
 
-export default function OnboardingForm() {
+export default function OnboardingForm({ onComplete }: OnboardingFormProps) {
   const { 
     onboardingStep, 
     setOnboardingStep, 
@@ -225,7 +228,7 @@ export default function OnboardingForm() {
       {/* Condition list */}
       <div className="max-h-64 overflow-y-auto space-y-2">
         {filteredConditions.map((condition) => {
-          const isSelected = healthConditions.find(c => c.id === condition.id);
+          const isSelected = !!healthConditions.find(c => c.id === condition.id);
           return (
             <button
               key={condition.id}
@@ -414,7 +417,7 @@ export default function OnboardingForm() {
           onClick={() => {
             const generatedHabits = generateHabits(profile!, healthConditions, customConditions);
             useAppStore.getState().setHabits(generatedHabits);
-            useAppStore.getState().setOnboarded(true);
+            onComplete();
           }}
           className="btn-primary w-full mt-6"
         >

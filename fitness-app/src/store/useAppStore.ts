@@ -77,7 +77,7 @@ const initialWeather: WeatherData = {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // Initial State
       isOnboarded: false,
       onboardingStep: 'profile',
