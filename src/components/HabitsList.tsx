@@ -1,8 +1,57 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
-import { Check, Clock, Bell, Zap } from 'lucide-react';
-import { Sun } from 'lucide-react';
+import { 
+  Check, Clock, Bell, Zap, Sun, Droplet, Footprints, Eye, Sunrise, 
+  UserCheck, Moon, Activity, Bed, Droplets, Pill, GlassWater,
+  HeartPulse, Utensils, Wind, Heart, SprayCan, CloudSun,
+  RotateCw, PersonStanding, MoveVertical, Apple,
+  Smile, Users, Brain, Coffee, BedDouble, MonitorOff, Music,
+  Stethoscope, StretchHorizontal, Sunset
+} from 'lucide-react';
+import type { Habit } from '../types';
+
+// Map icon string names to Lucide React components
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  'droplet': Droplet,
+  'walk': Footprints,
+  'eye': Eye,
+  'sunrise': Sunrise,
+  'stretch': StretchHorizontal,
+  'sunset': Sunset,
+  'user-check': UserCheck,
+  'moon': Moon,
+  'activity': Activity,
+  'bed': Bed,
+  'droplets': Droplets,
+  'pill': Pill,
+  'glass-water': GlassWater,
+  'heart-pulse': HeartPulse,
+  'utensils': Utensils,
+  'wind': Wind,
+  'heart': Heart,
+  'lungs': Wind, // Fallback to wind for lungs/breathing icon
+  'spray-can': SprayCan,
+  'cloud-sun': CloudSun,
+  'rotate-cw': RotateCw,
+  'person-standing': PersonStanding,
+  'move-vertical': MoveVertical,
+  'footprints': Footprints,
+  'apple': Apple,
+  'smile': Smile,
+  'users': Users,
+  'brain': Brain,
+  'coffee': Coffee,
+  'bed-double': BedDouble,
+  'monitor-off': MonitorOff,
+  'music': Music,
+  'stethoscope': Stethoscope,
+  'user-md': Stethoscope, // Fallback to stethoscope for doctor icon
+};
+
+const getIconComponent = (iconName: string): React.ComponentType<{ className?: string }> => {
+  return iconMap[iconName] || Droplet; // Default fallback icon
+};
 
 export default function HabitsList() {
   const { habits, completeHabit, snoozeHabit } = useAppStore();
@@ -58,10 +107,13 @@ export default function HabitsList() {
 
         <div className="flex items-start gap-4">
           <div 
-            className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+            className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
             style={{ backgroundColor: `${habit.color}20` }}
           >
-            <span className="text-2xl">{habit.icon}</span>
+            {(() => {
+              const IconComponent = getIconComponent(habit.icon);
+              return <IconComponent className="w-6 h-6" style={{ color: habit.color }} />;
+            })()}
           </div>
 
           <div className="flex-1 min-w-0">
